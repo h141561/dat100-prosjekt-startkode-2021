@@ -13,7 +13,6 @@ public class VriOtteSpil {
 		
 		
 		//testConstructor();
-		
 		runGame();
 	}
 	private static void runGame() {

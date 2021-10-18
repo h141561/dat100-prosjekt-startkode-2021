@@ -1,9 +1,5 @@
 package no.hvl.dat100.prosjekt.kontroll;
 
-import java.util.Random;
-
-import com.sun.org.apache.bcel.internal.generic.ReturnaddressType;
-
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
 import no.hvl.dat100.prosjekt.kontroll.spill.Handling;
 import no.hvl.dat100.prosjekt.kontroll.spill.HandlingsType;
@@ -36,7 +32,10 @@ public class NordSpiller extends Spiller {
 		Kort mogleg = hand.GetGyldige(topp);
 		
 		if(mogleg != null) {
-			System.out.printf("Kan legge ned kort : \tFarge = %s\tVerdi=\t%d\n",mogleg.fargeTilStreng(),mogleg.getVerdi());
+			System.out.printf(
+					"Kan legge ned kort : \tFarge = %s\tVerdi=\t%d\n",
+					mogleg.fargeTilStreng(),mogleg.getVerdi()
+					);
 			return new Handling(HandlingsType.LEGGNED, mogleg);
 		}
 		if(getAntallTrekk() < Regler.maksTrekk()) {

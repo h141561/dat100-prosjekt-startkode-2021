@@ -112,6 +112,8 @@ public class Bord {
 	 * @return peker/referanse til øverste kortet i til-bunken.
 	 */
 	public Kort seOversteBunkeTil() {
+		if(bunkeTil.erTom())
+			snuTilBunken();
 		return bunkeTil.seSiste();
 	}
 	

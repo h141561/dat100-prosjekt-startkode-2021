@@ -168,7 +168,18 @@ public class Spill {
 		Kort kort = null;
 		switch(handling.getType()){
 		case TREKK:
+			try {
 			kort = bord.getBunkeFra().seSiste();
+			}catch(Exception e) {
+				System.out.println("------------EXCEPTION------------");
+				System.out.println(e.getMessage());
+				System.out.printf("Exception tatt, Info : \n"
+						+ "BunkeFraa Har \t%d Kort\n"
+						+ "BunkeTil Har \t%d Kort\n"
+						,bord.getBunkeFra().getAntalKort()
+						,bord.getBunkeTil().getAntalKort()
+						);
+			}
 			break;
 		case LEGGNED:
 			kort = handling.getKort();
