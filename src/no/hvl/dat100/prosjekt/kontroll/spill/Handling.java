@@ -10,6 +10,7 @@ public class Handling {
 	public Handling(HandlingsType t, Kort k) {
 		type = t;
 		kort = k;
+		//System.out.printf("Ny Handling Laga, Kortet er %s %d", k.fargeTilStreng(), k.getVerdi());
 	}
 
 	public HandlingsType getType() {

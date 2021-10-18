@@ -36,12 +36,15 @@ public class SydSpiller extends Spiller {
 	 */
 	@Override
 	public Handling nesteHandling(Kort topp) {
-
-		// TODO - START
-		/* first-fit strategi */
-	
-		throw new UnsupportedOperationException(TODO.method());
-	
-		// TODO - END
+		
+		Kort mogleg = hand.GetGyldige(topp);
+		
+		if(mogleg != null) {
+			return new Handling(HandlingsType.LEGGNED, mogleg);
+		}
+		if(getAntallTrekk() < Regler.maksTrekk())
+			return new Handling(HandlingsType.TREKK, topp);
+		else
+			return new Handling(HandlingsType.FORBI, topp);
 	}
 }

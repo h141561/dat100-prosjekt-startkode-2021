@@ -24,7 +24,7 @@ public class FraBunkeButtonListener implements ActionListener {
 		if (kontroll.erSydTur()) {
 			
 			Kort kort = kontroll.trekkFraBunke();
-
+			
 			if (kort != null) {
 				utsyn.oppdater();
 			} else {

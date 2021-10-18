@@ -1,5 +1,6 @@
 package no.hvl.dat100.prosjekt.modell;
 
+
 /**
  * Klasse for å representere et spillkort. Kortene har en farge (bestemt av
  * oppramstypen Kortfarge) og en verdi (1,..., 13) der 1 = ess, 11 = knekt, 12 =
@@ -33,7 +34,22 @@ public class Kort implements Comparable<Kort> {
 	public Kortfarge getFarge() {
 		return farge;
 	}
-
+	
+	public String fargeTilStreng() {
+		switch(farge) {
+		case Spar:
+			return"Spar";
+		case Klover:
+			return "Klover";
+		case Hjerter:
+			return "Hjarte";
+		case Ruter:
+			return "Ruter";
+		default:
+			return "UGYLDIG_FARGE";
+		}
+	}
+	
 	/**
 	 * Setter ny farge
 	 * 
@@ -187,6 +203,18 @@ public class Kort implements Comparable<Kort> {
 			v += '0';
 		}
 
-		return "" + farge + v;
+		return "" + farge;
+	}
+	/**
+	 * Printar ut Verdien, plassen og Fargen til kortet;
+	 * 
+	 * 
+	 */
+	public void printinfo() {
+		System.out.printf("Farge = %s, Tal = %d \n", toString() , verdi);
 	}
 }
+
+
+
+

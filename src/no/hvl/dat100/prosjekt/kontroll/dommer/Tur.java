@@ -8,7 +8,6 @@ import no.hvl.dat100.prosjekt.kontroll.spill.Spillere;
 public class Tur {
 
 	private static Spillere aktiv = Spillere.INGEN;
-
 	public static Spillere tur() {
 		
 		return aktiv;

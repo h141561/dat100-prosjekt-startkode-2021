@@ -47,17 +47,7 @@ public class Dommer {
 	 */
 	
 	private static ArrayList<Kort> toArrayList(KortSamling samling) {
-		
-		int antallKort = samling.getAntalKort();
-		Kort[] kortTab = samling.getSamling();
-
-		ArrayList<Kort> list = new ArrayList<Kort>();
-		for (int i = 0; i < antallKort; i++) {
-			list.add(kortTab[i]);
-		}
-
-		return list;
-		
+		return samling.tilArrayList();
 	}
 	
 	private boolean sjekkUtdeling() {
@@ -92,16 +82,9 @@ public class Dommer {
 		return korrekt;
 	}
 
-	private void trekkFraBunke(Spillere spiller, Kort kort) {
-
-		if (spiller == Spillere.NORD) {
-			nordHand.add(kort);
-			antalltrekk++;
-		} else if (spiller == Spillere.SYD) {
-			sydHand.add(kort);
-			antalltrekk++;
-		}
-
+	private void trekkFraBunke(ISpiller spiller, Kort kort) {
+		
+		spiller.leggTilKort(kort);
 		LOGGER.info(spiller + " trekker " + kort + " fra bunken med " + antalltrekk + "trekk");
 	}
 
@@ -118,14 +101,7 @@ public class Dommer {
 	}
 
 	private boolean harKort(ISpiller spiller, Kort kort) {
-		ArrayList<Kort> hand = getHand(spiller);
-		boolean ok = false;
-
-		if (hand != null) {
-			ok = hand.contains(kort);
-		}
-
-		return ok;
+		return spiller.getHand().har(kort);
 
 	}
 
@@ -155,7 +131,9 @@ public class Dommer {
 			break;
 		case LEGGNED:
 			Kort kort = handling.getKort();
-			ok = harKort(spiller, kort) && Regler.kanLeggeNed(kort, spill.getBord().seOversteBunkeTil());
+			ok = Regler.kanLeggeNed(kort, spill.getBord().seOversteBunkeTil());
+			if(!harKort(spiller, kort))
+				System.out.println("Spelar har ikkje kort");
 		}
 
 		if (!ok) {
@@ -171,14 +149,18 @@ public class Dommer {
 
 		switch (handling.getType()) {
 		case TREKK:
-			if (kort != null) {
-				trekkFraBunke(spiller.hvem(), kort);
+			if (kort != null) 
+			{
+				trekkFraBunke(spiller, spill.getBord().taOversteFraBunke());
 				LOGGER.info("Utfører " + "[ " + spiller.hvem() + " " + handling + " " + kort + " med " + antalltrekk
 						+ " trekk ] ");
+				antalltrekk++;
+				
 			} else {
 				LOGGER.severe("Utfører " + "[ " + spiller.hvem() + " " + handling + " (null) med " + antalltrekk
 						+ " trekk ] ");
 			}
+			
 			break;
 		case FORBI:
 			LOGGER.info("Utfører " + handlingstr);
@@ -187,9 +169,13 @@ public class Dommer {
 		case LEGGNED:
 			LOGGER.info("Utfører " + handlingstr);
 			Kort kortned = handling.getKort();
-			overste = kortned;
+			if(kortned == null)
+			{
+				LOGGER.severe("\nKortned er pullptr\n");
+			}else
+				System.out.printf("komt gjennom utforhandling med %s %d", kortned.fargeTilStreng(), kortned.getVerdi());
+			this.spill.leggnedKort(spiller, kort);
 			antalltrekk = 0;
-			fjernKort(spiller, kortned);
 			break;
 		}
 
@@ -198,6 +184,25 @@ public class Dommer {
 		LOGGER.info("Toppen er " + overste); // TODO: kunne her sjekke at
 												// overste var lig det som er i
 												// spill sin tilbunke.
+		spiller.setAntallTrekk(antalltrekk);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

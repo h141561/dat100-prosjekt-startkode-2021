@@ -19,7 +19,7 @@ import no.hvl.dat100.prosjekt.modell.Kort;
 public abstract class Spiller implements ISpiller {
 
 	// hand for spilleren (samling)
-	private KortSamling hand; 
+	protected KortSamling hand; 
 	
 	// antall trekk spilleren har gjort fra fra-bunken
 	private int antalltrekk; 
@@ -32,11 +32,8 @@ public abstract class Spiller implements ISpiller {
 	 * antalltrekk som 0 og setter spiller til Spillere.INGEN.
 	 */
 	public Spiller() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.constructor("Spiller"));
-		// TODO - END
+		hand = new KortSamling();
+		spiller = Spillere.INGEN;
 	}
 
 	/**
@@ -47,99 +44,49 @@ public abstract class Spiller implements ISpiller {
 	 *            hvilken spiller det er.
 	 */
 	public Spiller(Spillere spiller) {
-		
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.constructor("Spiller"));
-		// TODO - END
+		hand = new KortSamling();
+		this.spiller = spiller;
+		System.out.println("Spelar laga");
 	}
 
 	public int getAntallKort() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return hand.getAntalKort();
 	}
 
 	public KortSamling getHand() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return hand;
 	}
 
 	public int getAntallTrekk() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
+		return antalltrekk;
 	}
 
 	public Spillere hvem() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-		
+		return spiller;
 	}
 
 	public void setAntallTrekk(int t) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		antalltrekk = t;
 	}
 
 	public boolean erFerdig() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
-		
+		return hand.erTom();
 	}
 
+	
 	public void leggTilKort(Kort kort) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
-		
+		hand.leggTil(kort);
 	}
 
 	public void fjernKort(Kort kort) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
-		
+		hand.fjern(kort);
 	}
 
 	public void fjernAlleKort() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		hand.fjernAlle();
 	}
 
 	public void trekker(Kort kort) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
-		
+		hand.leggTil(kort);
 	}
 }

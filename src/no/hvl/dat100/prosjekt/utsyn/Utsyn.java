@@ -199,7 +199,7 @@ public class Utsyn extends JFrame {
 	public JLabel getOverste() {
 		return bunketil;
 	}
-
+	
 	public JPanel getSyd() {
 		return syd;
 	}
@@ -306,6 +306,8 @@ public class Utsyn extends JFrame {
 		case SYD:
 			sydhand.setIcon(vinnerikon);
 			break;
+		default:
+			System.out.println("Kontroll.Vinner() gaar til Deault");
 		case INGEN:
 			sydhand.setIcon(sydikon);
 			nordhand.setIcon(nordikon);

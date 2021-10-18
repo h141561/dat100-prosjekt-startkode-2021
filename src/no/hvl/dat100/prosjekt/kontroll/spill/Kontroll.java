@@ -8,6 +8,7 @@ import no.hvl.dat100.prosjekt.kontroll.dommer.Dommer;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Tur;
 import no.hvl.dat100.prosjekt.modell.Kort;
+import no.hvl.dat100.prosjekt.modell.Kortfarge;
 
 public class Kontroll {
 
@@ -15,7 +16,7 @@ public class Kontroll {
 	private Spill spill;
 
 	public Kontroll() {
-
+		
 	}
 
 	public void startSpill() {
@@ -59,7 +60,6 @@ public class Kontroll {
 	}
 
 	private ISpiller turSpiller() {
-
 		ISpiller spiller = null;
 
 		if (erSydTur()) {
@@ -106,31 +106,26 @@ public class Kontroll {
 	// kaldes ved klikk på fra bunken med syd aktiv spiller
 	public Kort trekkFraBunke() {
 
-		Kort kort = null;
+		Kort kort = new Kort(Kortfarge.Hjerter, 1);
 
 		ISpiller spiller = turSpiller();
 
-		Handling handling = new Handling(HandlingsType.TREKK, null);
-
+		Handling handling = new Handling(HandlingsType.TREKK, new Kort(Kortfarge.Hjerter,1));
+		
 		if (spiller != null) {
 
 			boolean ok = dommer.sjekkHandling(spiller, handling);
 
 			if (ok) {
-				kort = spill.trekkFraBunke(turSpiller());
-
-				if (kort != null) {
-					dommer.utforHandling(spiller, handling, kort);
-				}
+				dommer.utforHandling(spiller, handling, kort);
 			}
 		}
-
 		return kort;
 	}
 
 	public void handlingSpiller(ISpiller spiller) {
+		
 		Handling handling = spill.nesteHandling(spiller);
-
 		if (dommer.sjekkHandling(spiller, handling)) {
 			Kort kort = spill.utforHandling(spiller, handling);
 			dommer.utforHandling(spiller, handling, kort);
@@ -218,22 +213,15 @@ public class Kontroll {
 	 * @return true dersom kortet er lovlig å spille, false ellers.
 	 */
 	private boolean spillkortSyd(Kort kort) {
-		
-		// TODO - START
 		return spill.leggnedKort(spill.getSyd(), kort);
-		
-		// throw new UnsupportedOperationException(TODO.method());
-		// return null;
-		// TODO - END
 	}
 	
 	// kaldes ved klikk på et kort hos syd.
 	public boolean leggnedKortSyd(Kort kort) {
 
 		boolean ok;
-
 		ISpiller spiller = spill.getSyd();
-
+		
 		Handling handling = new Handling(HandlingsType.LEGGNED, kort);
 
 		ok = dommer.sjekkHandling(spiller, handling);
@@ -270,7 +258,6 @@ public class Kontroll {
 	}
 
 	public void spillAuto() {
-
 		while (!harVinner()) {
 
 			ISpiller spiller = turSpiller();

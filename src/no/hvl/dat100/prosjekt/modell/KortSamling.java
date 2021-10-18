@@ -2,7 +2,10 @@ package no.hvl.dat100.prosjekt.modell;
 
 import no.hvl.dat100.prosjekt.TODO;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
+import static java.lang.System.out;
 
+import java.lang.Iterable;
+import java.util.*;
 /**
  * Struktur for å lagre ei samling kort. Kan lagre hele kortstokken. Det finnes
  * en konstant i klassen Regler som angir antall kort i hver av de 4 fargene. Når
@@ -10,23 +13,32 @@ import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
  * det være praktisk å ha denne mindre.
  * 
  */
-public class KortSamling {
+public class KortSamling implements Iterable<Kort>{
 
-	private final int MAKS_KORT = 4 * Regler.MAKS_KORT_FARGE;
-
+	private final int MAKS_KORT = 52;
 	private Kort[] samling;
 	private int antall;
+	private Vector<Kort> kortVector;
 
 	/**
 	 * Oppretter en tom Kortsamling med plass til MAKS_KORT (hele kortstokken).
 	 */
 	public KortSamling() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.constructor("KortSamling"));
-		// TODO - END
+		kortVector = new Vector<Kort>(MAKS_KORT);
 	}
+	public KortSamling(int antall) {
+		kortVector = new Vector<Kort>(antall);
+	}
+	
+	public KortSamling(KortSamling t)
+	{
+		kortVector = new Vector<Kort>();
+		for(Kort i : t)
+		{
+			kortVector.add(i);
+		}
+	}
+
 
 	/**
 	 * Returnerer en tabell med kortene i samlinga. Tabellen trenger ikke være
@@ -38,9 +50,8 @@ public class KortSamling {
 	 * @return tabell av kort.
 	 */
 	public Kort[] getSamling() {
-		
-		return samling;
-		
+		Kort[] ret = new Kort[kortVector.size()];
+		return kortVector.toArray(ret);
 	}
 	
 	/**
@@ -49,12 +60,7 @@ public class KortSamling {
 	 * @return antall kort i samlinga.
 	 */
 	public int getAntalKort() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return kortVector.size();
 	}
 	
 	/**
@@ -63,12 +69,7 @@ public class KortSamling {
 	 * @return true om samlinga er tom, false ellers.
 	 */
 	public boolean erTom() {
-		
-		// TODO - START
-				
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return(kortVector.isEmpty());
 	}
 
 	/**
@@ -78,12 +79,8 @@ public class KortSamling {
 	 *            er kortet som skal leggast til.
 	 */
 	public void leggTil(Kort kort) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
-		
+		System.out.printf("legger til her %s %d\n", kort.fargeTilStreng(), kort.getVerdi());
+		kortVector.add(kort);
 	}
 	
 	/**
@@ -92,22 +89,21 @@ public class KortSamling {
 	 */
 	public void leggTilAlle() {
 		
-		// TODO - START
-		// Husk: bruk Regler.MAKS_KORT_FARGE for å få antall kort per farge
 		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		for(int i = 0; i <= 3; i++)
+		{
+			for(int k = 1; k <= 13 ; k++)
+			{
+				kortVector.add(new Kort(Kortfarge.getFarge(i),k));
+			}
+		}
 	}
 
 	/**
 	 * Fjerner alle korta fra samlinga slik at den blir tom.
 	 */
 	public void fjernAlle() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		kortVector.clear();
 	}
 	
 	/**
@@ -117,13 +113,7 @@ public class KortSamling {
 	 *         null.
 	 */
 	public Kort seSiste() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-		
+		return kortVector.lastElement();
 	}
 
 	/**
@@ -133,12 +123,12 @@ public class KortSamling {
 	 *         null.
 	 */
 	public Kort taSiste() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		if(kortVector.isEmpty())
+			return null;
+		Kort tmp = kortVector.lastElement();
+		Kort ret = new Kort(tmp.getFarge(), tmp.getVerdi());
+		kortVector.remove(kortVector.size() - 1);
+		return ret;
 	}
 	
 	/**
@@ -149,13 +139,7 @@ public class KortSamling {
 	 * @return true om kortet finst i samlinga, false ellers.
 	 */
 	public boolean har(Kort kort) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// return false;
-		// TODO - END
-		
+		return kortVector.contains(kort);
 	}
 
 	/**
@@ -170,11 +154,41 @@ public class KortSamling {
 			 
 	public boolean fjern(Kort kort) {
 		
-		// TODO - START
+		ArrayList<Integer> fjernbare = new ArrayList<Integer>();
 		
-		throw new UnsupportedOperationException(TODO.method());
+		return kortVector.remove(kort);
+		/*
+		int fjernast = 0;
+		for(int i = 0; i < samling.length; i++)
+		{
+			if(samling[i].equals(kort)) 
+			{
+				++fjernast;
+				fjernbare.add(i);
+			}
+		}
+		if(fjernast == 0)
+			return false;
 
-		// TODO - END
+		Kort[] ret = new Kort[samling.length - fjernast];
+		int antall = 0;
+		
+		try {
+			for(int i = 0 ; i < samling.length; i++)
+			{
+				if(fjernbare.contains(i))
+					continue;
+				if(samling[i].equals(kort));
+				{
+					samling[i].printinfo();
+					ret[antall++] = samling[i];
+				}
+			}
+		}catch(Exception e){
+			System.out.printf("Noko gjekk til dunders ret len = %d \n", samling.length);
+		}
+		samling = ret;
+		return true;*/
 	}
 
 	/**
@@ -184,13 +198,74 @@ public class KortSamling {
 	 *         som i kortsamlinga.
 	 */
 	public Kort[] getAllekort() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-	
+		return getSamling();
 	}
 	
+	public void printAlle() {
+		String outp = new String();
+		int tabs = 0;
+		Kortfarge gamle = Kortfarge.Hjerter;
+		for(Kort i : kortVector)
+		{
+			i.printinfo();
+		}
+	}
+	
+	/**
+	 * Gjer Tilbake alle Korta Som kan Leggast på eit spesifikt Kort
+	 * 
+	 * @param kort
+	 * 		Kva kort som det skal Leggast på
+	 * @return
+	 * 		Fyrste Kortet som er Gyldig
+	 * 
+	 */
+	
+	public Kort GetGyldige(Kort maal) {
+		
+		for(Kort i : kortVector)
+		{
+			if(i.getFarge() == maal.getFarge())
+			{
+				return i;
+			}
+			if(i.getVerdi() == maal.getVerdi())
+			{
+				return i;
+			}
+		}
+		
+		return null;
+	}
+	
+
+	
+	public void stokkKort()
+	{
+		Collections.shuffle(kortVector);
+	}
+	public void sorter()
+	{
+		Collections.sort(kortVector);
+	}
+	
+	@Override
+	public Iterator<Kort> iterator() {
+		return kortVector.iterator();
+	}
+	
+	public ArrayList<Kort> tilArrayList(){
+		ArrayList<Kort> ret = new ArrayList<Kort>();
+		for(Kort i : kortVector)
+			ret.add(i);
+		return ret;
+	}
 }
+
+
+
+
+
+
+
+
