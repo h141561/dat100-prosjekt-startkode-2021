@@ -88,8 +88,6 @@ public class KortSamling implements Iterable<Kort>{
 	 * slik at de normalt må stokkes før bruk.
 	 */
 	public void leggTilAlle() {
-		
-		
 		for(int i = 0; i <= 3; i++)
 		{
 			for(int k = 1; k <= 13 ; k++)

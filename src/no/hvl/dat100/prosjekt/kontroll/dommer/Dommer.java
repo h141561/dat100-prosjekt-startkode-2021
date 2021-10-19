@@ -151,6 +151,8 @@ public class Dommer {
 		case TREKK:
 			if (kort != null) 
 			{
+				if(spill.getBord().bunkefraTom())
+					spill.getBord().snuTilBunken();
 				trekkFraBunke(spiller, spill.getBord().taOversteFraBunke());
 				LOGGER.info("Utfører " + "[ " + spiller.hvem() + " " + handling + " " + kort + " med " + antalltrekk
 						+ " trekk ] ");

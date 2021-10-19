@@ -172,13 +172,18 @@ public class Spill {
 			kort = bord.getBunkeFra().seSiste();
 			}catch(Exception e) {
 				System.out.println("------------EXCEPTION------------");
-				System.out.println(e.getMessage());
+				System.out.println(e.getCause());
 				System.out.printf("Exception tatt, Info : \n"
 						+ "BunkeFraa Har \t%d Kort\n"
 						+ "BunkeTil Har \t%d Kort\n"
 						,bord.getBunkeFra().getAntalKort()
 						,bord.getBunkeTil().getAntalKort()
 						);
+				if(bord.getBunkeFra().erTom())
+				{
+					bord.snuTilBunken();
+				}
+				
 			}
 			break;
 		case LEGGNED:

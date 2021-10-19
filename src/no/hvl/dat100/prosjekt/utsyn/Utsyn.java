@@ -91,6 +91,7 @@ public class Utsyn extends JFrame {
 		// start vinduet
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
+		setSize(1000, 600);
 		setVisible(true);
 
 		// start spillet

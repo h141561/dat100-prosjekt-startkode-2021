@@ -102,6 +102,8 @@ public class Bord {
 	 */
 	
 	public Kort taOversteFraBunke() {
+		if(bunkeFra.erTom())
+			snuTilBunken();
 		return bunkeFra.taSiste();
 	}
 	
